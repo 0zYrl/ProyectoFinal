@@ -1,0 +1,31 @@
+{% extends "ProyectoWebApp/base.html" %} {% load static %} {% block content %}
+<div class="container mt-4">
+  <div class="row">
+    {% for servicio in servicios %}
+    <div class="col-lg-4 mb-4">
+      <div class="card-servicio h-100">
+        <img
+          class="card-img-servicio"
+          src="{{ servicio.imagen.url }}"
+          alt="{{ servicio.titulo }}"
+        />
+        <div class="card-body-servicio">
+          <h4 class="card-title-servicio" style="color: black">
+            {{ servicio.titulo }}
+          </h4>
+          <p class="card-text-servicio" style="color: black">
+            {{ servicio.contenido }}
+          </p>
+        </div>
+        <div class="card-footer">
+          <a href="#" class="btn btn-servicio" style="color: white"
+            >Más detalles</a
+          >
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+{% endblock %}
