@@ -23,14 +23,14 @@ def procesar_pedido(request):
 
     LineasPedido.objects.bulk_create(lineas_pedido)
 
+    messages.success(request, "El pedido se ha realizado con éxito")
+
     enviar_email(
         pedido=pedido,
         lineas_pedido=lineas_pedido,
         nombreusuario=request.user.username,  # Corrige aquí
         emailusuario=request.user.email
     )
-
-    messages.success(request, "El pedido se ha realizado con éxito")
     return redirect("/tienda")
 
 

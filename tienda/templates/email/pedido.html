@@ -47,7 +47,7 @@
             <li>Informacion del Pedido:</li>
             <ul>
                 {% for linea_pedido in lineas_pedido %}
-                <li>{{ linea_pedido.producto }} - Cantidad: {{ linea_pedido.cantidad }}</li>
+                <li>{{ linea_pedido.producto.nombre }}: {{ linea_pedido.cantidad }}</li>
                 {% endfor %}
             </ul>
         </ul>
