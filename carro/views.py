@@ -6,17 +6,21 @@ from tienda.models import Producto
 
 from django.shortcuts import redirect
 
+from django.contrib import messages
 # Create your views here.
 
 def agregar_producto(request, producto_id):
+    if request.user.is_authenticated:
+        carro=Carro(request)
 
-    carro=Carro(request)
+        producto=Producto.objects.get(id=producto_id)
 
-    producto=Producto.objects.get(id=producto_id)
+        carro.agregar(producto=producto)
 
-    carro.agregar(producto=producto)
-
-    return redirect("Tienda")
+        return redirect("Tienda")
+    else:
+        messages.error(request, "Debes iniciar sesión para agregar productos al carrito.")
+        return redirect("/login/login")
 
 
 def eliminar_producto(request, producto_id):
@@ -41,7 +45,7 @@ def restar_producto(request, producto_id):
     return redirect("Tienda")
 
 
-def limpiar_carro(request, producto_id):
+def limpiar_carro(request):
 
     carro=Carro(request)
 
@@ -52,4 +56,5 @@ def limpiar_carro(request, producto_id):
 def mostrar_carrito(request):
     carro = Carro(request)
     productos_en_carro = carro.get_productos()
-    return render(request, 'carro/widget.html', {'productos': productos_en_carro})
+    total_carro = carro.get_total()
+    return render(request, 'carro/widget.html', {'productos_en_carro': productos_en_carro, 'total_carro': total_carro})

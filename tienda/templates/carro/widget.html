@@ -1,44 +1,62 @@
-<table class="table table-bordered" style="color: white">
-  <thead>
-    <tr>
-      <th colspan="3" class="text-center">Carro compras</th>
-    </tr>
-    <tr>
-      <th>Producto</th>
-      <th>Cantidad</th>
-      <th>Suma</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% if productos %} {% for item in producto %}
-    <tr>
-      <td>{{ item.nombre }}</td>
-      <td>{{ item.cantidad }}</td>
-      <td>{{ item.precio }}</td>
-      <td>
-        <a
-          href="{% url 'carro:agregar' item.producto_id %}"
-          class="btn btn-sm btn-success mr-1"
-          >+</a
-        >
-        <a
-          href="{% url 'carro:restar' item.producto_id %}"
-          class="btn btn-sm btn-danger"
-          >-</a
-        >
-      </td>
-    </tr>
-    {% endfor %} {% else %}
-    <tr>
-      <td colspan="4">
-        <div class="alert alert-danger text-center">El carrito está vacío.</div>
-      </td>
-    </tr>
-    {% endif %}
-  </tbody>
-  <tfoot>
-    <tr>
-      <td colspan="3">Total: {{ importe_total_carro }} €</td>
-    </tr>
-  </tfoot>
-</table>
+<div class="container" style="width: 70%;">
+    <table class="table table-bordered table-hover" style="color: black; background-color: white;">
+      <thead class="thead-dark">
+        <tr>
+          <th colspan="4" class="text-center">Carro de compras</th>
+        </tr>
+        <tr>
+          <th>Producto</th>
+          <th>Categoría</th>
+          <th>Precio</th>
+          <th>Cantidad</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% if request.user.is_authenticated %}
+        {% if request.session.carro.items %}
+          {% for key, value in request.session.carro.items %}
+          <tr>
+            <td>{{ value.nombre }}</td>
+            <td>{{ value.categorias.nombre }}</td>
+            <td>{{ value.precio }}</td>
+            <td>
+              <a href="{% url 'carro:agregar' value.producto_id %}" class="btn btn-sm btn-success mr-1">+</a>
+              <span>{{ value.cantidad }}</span>
+              <a href="{% url 'carro:restar' value.producto_id %}" class="btn btn-sm btn-danger">-</a>
+            </td>
+          </tr>
+          {% endfor %}
+            {% else %}
+          <tr>
+            <td colspan="4">
+              <div class="alert alert-danger text-center">Sin productos</div>
+            </td>
+          </tr>
+      </tbody>
+      {% endif %}
+      <tfoot>
+        {% if request.session.carro.items%}
+        <tr>
+          <td colspan="3">Total: {{ importe_total_carro }} €</td>
+          <td>
+            <a href="{% url 'carro:limpiar' %}" class="btn btn-danger">Vaciar</a>
+          </td>
+        </tr>
+        {% endif%}
+          {% if request.session.carro.items%}
+          <tr>
+            <td colspan="4" style="text-align: center">
+              <a href="{% url 'procesar_pedido' %}" class="btn btn-primary btn-sm">Comprar</a>
+            </td>
+          </tr>
+          {% endif%}
+          {% else %}
+          <tr>
+            <td colspan="4">
+              <div class="alert alert-danger text-center">Debes iniciar sesion</div>
+            </td>
+          </tr>
+        {% endif %}
+      </tfoot>
+    </table>
+</div>

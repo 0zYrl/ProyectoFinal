@@ -20,7 +20,9 @@
           <div>
             <strong>Categorías:</strong>
             {% for categoria in post.categorias.all %}
-            <span class="badge bg-primary">{{ categoria.nombre }}</span>
+            <a
+            style="color: #333333"
+            >{{ categoria.nombre }}</a>
             {% endfor %}
           </div>
         </div>

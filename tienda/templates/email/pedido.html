@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirmación de Pedido</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        h2 {
+            margin-top: 0;
+            color: #007bff;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            margin-bottom: 10px;
+        }
+        .footer {
+            margin-top: 20px;
+            font-size: 12px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Confirmación de Pedido</h2>
+        <p>Hola {{ nombreusuario }},</p>
+        <p>Gracias por tu pedido con nosotros. Aquí están los detalles:</p>
+        <ul>
+            <li>Número de Pedido: {{ pedido.id }}</li>
+            <li>Email de Usuario: {{ emailusuario }}</li>
+            <li>Informacion del Pedido:</li>
+            <ul>
+                {% for linea_pedido in lineas_pedido %}
+                <li>{{ linea_pedido.producto }} - Cantidad: {{ linea_pedido.cantidad }}</li>
+                {% endfor %}
+            </ul>
+        </ul>
+        <p>Si tienes alguna pregunta sobre tu pedido, no dudes en ponerte en contacto con nosotros.</p>
+        <p>¡Gracias por tu compra!</p>
+        <p class="footer">Este es un correo electrónico generado automáticamente. Por favor, no respondas a este mensaje.</p>
+    </div>
+
+</body>
+</html>
